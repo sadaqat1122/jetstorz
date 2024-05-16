@@ -1,0 +1,117 @@
+<!-- order_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+        <!-- Product Information -->
+        <div class="card">
+            <div class="row no-gutters">
+                <aside class="col-md-6">
+                    <article class="gallery-wrap"> 
+                        <div class="img-big-wrap">
+                            <img src="{{ single_product.image.url }}" class="img-xs icon rounded-circle">
+                        </div>
+                    </article>
+                </aside>
+                <main class="col-md-6 border-left">
+                    <form action="{% url 'place_order' %}" method="POST">
+                        {% csrf_token %}
+                        <article class="content-body">
+                            <h2 class="title">{{ single_product.product_name }}</h2>
+                            <div class="mb-3"> 
+                                <var class="price h4">{{ single_product.price }} AED</var> 
+                            </div> 
+                            <!-- Customer Information -->
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" required>
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">+971</span>
+                                        </div>
+                                        <input type="text" name="phone" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="city">Emirates</label>
+                                    <select name="city" class="form-control" required>
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="Abu Dhabi">Abu Dhabi - Free Delivery</option>
+                                        <option value="Dubai">Dubai - Free Delivery</option>
+                                        <option value="Sharjah">Sharjah - Free Delivery</option>
+                                        <option value="Ajman">Ajman - Free Delivery</option>
+                                        <option value="Umm Al-Quwain">Umm Al-Quwain - Free Delivery</option>
+                                        <option value="Ras Al Khaimah">Ras Al Khaimah - Free Delivery</option>
+                                        <option value="Fujairah">Fujairah - Free Delivery</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <select name="quantity" class="form-control" required="">
+                                        <option value="" disabled selected>Select</option>
+                                        {% for variation in single_product.variation_set.all %}
+                                            <option value="{{ variation.quantity }}">{{ variation.value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="address_line_1">Full Address</label>
+                                    <input type="text" name="address_line_1" class="form-control" required>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            {% if single_product.stock <= 0 %}
+                                <button type="button" class="btn btn-danger">Out of Stock</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary btn-block">Submit now</button>
+                            {% endif %}
+                        </article>
+                    </form>
+                </main>
+            </div>
+        </div>
+        <!-- Customer Reviews -->
+        <div class="row">
+            <div class="col-md-9">
+                <header class="section-heading">
+                    <h3>Customer Reviews</h3>
+                </header>
+                <article class="box mb-3">
+                    <div class="icontext w-100">
+                        <img src="/path/to/static/images/avatars/avatar1.jpg" class="img-xs icon rounded-circle">
+                        <div class="text">
+                            <span class="date text-muted float-md-right">24.04.2020</span>
+                            <h6 class="mb-1">Mike John</h6>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p>
+                            Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

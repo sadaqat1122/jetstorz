@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form method="post" action="{% url 'place_order' %}">
+  {% csrf_token %}
+  <section class="section-content padding-y bg">
+    <div class="container">
+      <h4 class="text-center mb-4">Review Order and Choose Payment Method</h4>
+      <div class="row">
+        <!-- Billing Address -->
+        <aside class="col-lg-8">
+          <div class="card">
+            <h5 class="card-header">Billing Address</h5>
+            <div class="card-body">
+              <!-- Display billing address details -->
+              <!-- Your existing billing address display code here -->
+            </div>
+          </div>
+          <!-- Payment Method -->
+          <div class="card mt-4">
+            <h5 class="card-header">Payment Method</h5>
+            <div class="card-body">
+              <!-- Display cash on delivery as payment method -->
+              <p>CASH ON DELIVERY</p>
+            </div>
+          </div>
+          <!-- Review Products -->
+          <div class="card mt-4">
+            <h5 class="card-header">Review Products</h5>
+            <div class="card-body">
+              <table class="table table-borderless table-shopping-cart">
+                <!-- Your existing product review table code here -->
+              </table>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Order Summary -->
+        <aside class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>Total price:</dt>
+                <dd class="text-right">${{ total }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Tax:</dt>
+                <dd class="text-right"> ${{ tax }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Grand Total:</dt>
+                <dd class="text-right text-dark b"><strong>${{ grand_total }}</strong></dd>
+              </dl>
+              <hr>
+              <p class="text-center mb-3">
+                <!-- Display payment methods image -->
+                <img src="{% static 'images/misc/payments.png' %}" alt="Payment Methods" height="26">
+              </p>
+              <!-- Instead of PayPal button, add a note about cash on delivery -->
+              <p class="text-center">Please keep the exact amount ready for cash on delivery.</p>
+              <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</form>
+
+{% endblock %}

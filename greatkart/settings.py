@@ -1,14 +1,24 @@
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
+from dotenv import load_dotenv
 
+# Load environment variables from a .env file
+load_dotenv()
+
+# Define the base directory for your project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '(eap19a2a439uo!b16_xc(v^8i++hb98k4w=ggh#gp^w-*o&g#'
+# Secret key (Keep this secret!)
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
-DEBUG = True
+# Debug mode for development (Set to False in production)
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+# Allowed hosts for production
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 
+# List of installed apps in your project
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,8 +30,10 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'carts',
+    'orders',
 ]
 
+# Middleware settings
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -32,8 +44,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# URL configuration for your project
 ROOT_URLCONF = 'greatkart.urls'
 
+# Template settings
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -52,10 +66,13 @@ TEMPLATES = [
     },
 ]
 
+# WSGI application for serving your project
 WSGI_APPLICATION = 'greatkart.wsgi.application'
 
+# Custom user model for authentication
 AUTH_USER_MODEL = 'accounts.Account'
 
+# Database configuration (Use a different database engine for production)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -63,6 +80,20 @@ DATABASES = {
     }
 }
 
+# For production, switch to a more robust database like PostgreSQL or MySQL.
+# Example for PostgreSQL:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+#         'PORT': os.getenv('POSTGRES_PORT', '5432'),
+#     }
+# }
+
+# Password validation settings
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -78,36 +109,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Internationalization and localization settings
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
+# Static files (CSS, JavaScript, etc.) settings
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'greatkart/static'),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'greatkart/static')]
 
+# Media files (user-uploaded content) settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-from django.contrib.messages import constants as messages
-
+# Message tags configuration for styling
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
-  
 }
 
+# Email settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'zyvacottage@gmail.com'
-EMAIL_HOST_PASSWORD = '@Zyvacottage@2020!Aug'  # Replace this with the app password you generated
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
