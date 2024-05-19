@@ -2,6 +2,10 @@ branch-defaults:
   main:
     environment: jetstoz-course-env
     group_suffix: null
+environment-defaults:
+  jetstoz-course-env:
+    branch: null
+    repository: null
 global:
   application_name: jetstorz-course
   branch: null
