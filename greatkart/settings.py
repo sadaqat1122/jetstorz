@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 # Allowed hosts for production
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = ['jetstoz-course-env.eba-jvidvqh9.us-west-2.elasticbeanstalk.com']
 
 # List of installed apps in your project
 INSTALLED_APPS = [
@@ -138,10 +138,3 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-
-# Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Dubai'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
