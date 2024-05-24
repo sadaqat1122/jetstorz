@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-import os
+from dotenv import load_dotenv  # Import load_dotenv function
 
 # Load environment variables from a .env file
 load_dotenv()
@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 # Allowed hosts for production
-ALLOWED_HOSTS = [' jetonlinestore-env.eba-pqwbgi95.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['jetonlinestore-env.eba-pqwbgi95.us-west-2.elasticbeanstalk.com']
 
 # List of installed apps in your project
 INSTALLED_APPS = [
@@ -129,11 +129,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
-
-
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Access environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')
