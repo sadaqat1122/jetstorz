@@ -31,8 +31,6 @@
 .img-big-wrap img:hover {
     transform: scale(1.1);
 }
-
-
 .category-box {
     border: 1px solid #ccc;
     border-radius: 8px;

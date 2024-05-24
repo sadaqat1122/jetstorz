@@ -1,13 +1,16 @@
 branch-defaults:
   main:
-    environment: jetstoz-course-env
+    environment: jetonlinestore-env
     group_suffix: null
 environment-defaults:
   jetstoz-course-env:
     branch: null
     repository: null
+  my-env-jetcart:
+    branch: null
+    repository: null
 global:
-  application_name: jetstorz-course
+  application_name: django-tutorial
   branch: null
   default_ec2_keyname: aws-eb
   default_platform: Python 3.7

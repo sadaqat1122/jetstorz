@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-from dotenv import load_dotenv
+import os
 
 # Load environment variables from a .env file
 load_dotenv()
@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 # Allowed hosts for production
-ALLOWED_HOSTS = ['jetstoz-course-env.eba-jvidvqh9.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = [' jetonlinestore-env.eba-pqwbgi95.us-west-2.elasticbeanstalk.com']
 
 # List of installed apps in your project
 INSTALLED_APPS = [
@@ -109,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization and localization settings
+# Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -130,11 +130,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
 
-# Email settings
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access environment variables
+SECRET_KEY = os.getenv('SECRET_KEY')
