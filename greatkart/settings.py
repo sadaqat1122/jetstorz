@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-from dotenv import load_dotenv  # Import load_dotenv function
+from dotenv import load_dotenv
 
 # Load environment variables from a .env file
 load_dotenv()
@@ -13,10 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 # Debug mode for development (Set to False in production)
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
 # Allowed hosts for production
-ALLOWED_HOSTS = ['jetonlinestore-env.eba-pqwbgi95.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['jetstoz-onlineweb.eba-uxdaaz83.us-west-2.elasticbeanstalk.com']
 
 # List of installed apps in your project
 INSTALLED_APPS = [
@@ -80,19 +80,6 @@ DATABASES = {
     }
 }
 
-# For production, switch to a more robust database like PostgreSQL or MySQL.
-# Example for PostgreSQL:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-#         'PORT': os.getenv('POSTGRES_PORT', '5432'),
-#     }
-# }
-
 # Password validation settings
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -109,9 +96,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# Internationalization and localization settings
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'US/Pacific'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -130,5 +117,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
 
-# Access environment variables
-SECRET_KEY = os.getenv('SECRET_KEY')
+# Email settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
