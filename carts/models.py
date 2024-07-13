@@ -20,5 +20,9 @@ class CartItem(models.Model):
     def sub_total(self):
         return self.product.price * self.quantity
 
+    @property
+    def total_price(self):
+        return self.product.price * self.quantity
+
     def __str__(self):
-        return str(self.product)
+        return f"{self.quantity} x {self.product.product_name}"

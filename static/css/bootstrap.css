@@ -372,11 +372,11 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-  font-size: 2.5rem;
+  font-size: 2.0rem;
 }
 
 h2, .h2 {
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 
 h3, .h3 {
@@ -2385,13 +2385,13 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #004AAD;
+  background-color:#FF5757;
   border-color: #CB6CE6;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #1650e0;
-  border-color: #154cd4;
+  background-color:#FF3131;
+  border-color: #FF5757;
 }
 .btn-primary:focus, .btn-primary.focus {
   box-shadow: 0 0 0 0.2rem rgba(80, 126, 238, 0.5);
@@ -2493,7 +2493,7 @@ fieldset:disabled a.btn {
 
 .btn-warning {
   color: #fff;
-  background-color: #ff9017;
+  background-color:#FF5757;
   border-color: #ff9017;
 }
 .btn-warning:hover {
@@ -6197,7 +6197,7 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-  background-color: #545454 !important;
+  background-color:#FF3131 !important;
 }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
@@ -10153,3 +10153,16 @@ h3 {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+
+.icon-red-border-shadow {
+    border: 1px solid red;
+    padding: 10px; /* Adjust padding as needed */
+    display: inline-block;
+    border-radius: 50%; /* Adjust if you want rounded icons */
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); /* Right drop shadow */
+    text-align: center;
+}
+
+.category-item {
+    margin-bottom: 30px;
+}

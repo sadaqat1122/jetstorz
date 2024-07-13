@@ -1,12 +1,12 @@
 import os
 from pathlib import Path
-from django.contrib.messages import constants as messages
 from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 
 # Load environment variables from a .env file
 load_dotenv()
 
-# Define the base directory for your project
+# Base directory of the Django project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret key (Keep this secret!)
@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
 # Allowed hosts for production
-ALLOWED_HOSTS = ['jetstoz-onlineweb.eba-uxdaaz83.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # List of installed apps in your project
 INSTALLED_APPS = [
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'jet',
+    # Add more apps as needed
 ]
 
 # Middleware settings
@@ -69,10 +71,13 @@ TEMPLATES = [
 # WSGI application for serving your project
 WSGI_APPLICATION = 'greatkart.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 # Custom user model for authentication
 AUTH_USER_MODEL = 'accounts.Account'
 
-# Database configuration (Use a different database engine for production)
+# Database configuration (using SQLite by default)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,22 +110,29 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, etc.) settings
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'greatkart/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collecting static files
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Additional directories for static files
 
 # Media files (user-uploaded content) settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Message tags configuration for styling
+# Message tags configuration for styling (using Bootstrap classes)
 MESSAGE_TAGS = {
-    messages.ERROR: "danger",
+    messages.ERROR: 'danger',
 }
 
-# Email settings
+# Email settings for SMTP (using Gmail as an example)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@gmail.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Logging configuration for database operations (enabled in DEBUG mode)
+if DEBUG:
+    import logging
+    logger = logging.getLogger('django.db.backends')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(logging.StreamHandler())

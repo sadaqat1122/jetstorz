@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Order, OrderProduct
 
-
 def place_order(request):
     if request.method == 'POST':
         # Extract form data from the POST request
@@ -11,6 +10,8 @@ def place_order(request):
         city = request.POST.get('city')
         quantity = request.POST.get('quantity')
         address_line_1 = request.POST.get('address_line_1')
+        product_title = request.POST.get('product_title')  # Assuming product_title is in the POST data
+        product_price = request.POST.get('product_price')  # Assuming product_price is in the POST data
 
         # Create a new Order instance with the form data
         order = Order.objects.create(
@@ -20,6 +21,8 @@ def place_order(request):
             city=city,
             quantity=quantity,
             address_line_1=address_line_1,
+            product_title=product_title,
+            product_price=product_price,
         )
 
         # Redirect to a success page or display a success message
@@ -27,6 +30,7 @@ def place_order(request):
 
     # If the request method is not POST, render the form page
     return render(request, 'order_form.html')
+
 
 def order_success(request):
     return render(request, 'order_success.html')

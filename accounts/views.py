@@ -10,9 +10,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-from carts.views import _cart_id
-from carts.models import Cart, CartItem
-import requests
+from carts.utils import _cart_id  # Import from carts.utils
 
 
 def register(request):
@@ -67,7 +65,7 @@ def login(request):
             return redirect('login')
     return render(request, 'accounts/login.html')
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You are logged out.')
@@ -89,7 +87,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation link')
         return redirect('register')
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
 
@@ -149,3 +147,36 @@ def resetPassword(request):
             messages.error(request, 'Passwords do not match')
             return redirect('resetPassword')
     return render(request, 'accounts/resetPassword.html')
+# accounts/views.py
+
+
+# Rest of the code
+
+def place_order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            # Get the current logged-in user (assuming authentication is handled)
+            account = request.user
+
+            # Extract form data and create an Order instance
+            order = Order.objects.create(
+                account=account,
+                product_title=form.cleaned_data['product_title'],
+                product_price=form.cleaned_data['product_price'],
+                quantity=form.cleaned_data['quantity'],
+                city=form.cleaned_data['city'],
+                address_line_1=form.cleaned_data['address_line_1'],
+            )
+
+            return redirect('order_success')
+    else:
+        form = OrderForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'order_form.html', context)
+
+def order_success(request):
+    return render(request, 'order_success.html')

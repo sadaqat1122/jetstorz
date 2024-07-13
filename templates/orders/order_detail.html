@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Detail</title>
+</head>
+<body>
+    <h1>Order Detail</h1>
+    <p>First Name: {{ order.first_name }}</p>
+    <p>Last Name: {{ order.last_name }}</p>
+    <p>Phone: {{ order.phone }}</p>
+    <p>City: {{ order.city }}</p>
+    <p>Address: {{ order.address_line_1 }}</p>
+    <p>Quantity: {{ order.quantity }}</p>
+    <h2>Products</h2>
+    <ul>
+        {% for order_product in order_products %}
+            <li>{{ order_product.product.name }} - {{ order_product.quantity }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,1 +1,14 @@
-Thanks
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+  <div class="container">
+    <h4 class="text-center mb-10">Payment Confirmation</h4>
+    <!-- Display payment confirmation content here -->
+    <p>Your order has been successfully placed.</p>
+    <p>Order Number: {{ order.order_number }}</p>
+    <p>Grand Total: ${{ grand_total }}</p>
+  </div>
+</section>
+{% endblock %}

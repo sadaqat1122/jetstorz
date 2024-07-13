@@ -1,117 +1,131 @@
-<!-- order_form.html -->
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+
+
+
+
 <section class="section-content padding-y bg">
-    <div class="container">
-        <!-- Product Information -->
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+{% if not cart_items %}
+<!--- message-->
+<h2 class="text-center">Your shopping cart is Empty</h2>
+<br>
+<div class ="text-center">
+    <a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
+{% else %}
+<div class="row">
+    <aside class="col-lg-9">
+<div class="card">
+<table class="table table-borderless table-shopping-cart">
+<thead class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Product</th>
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+
+{% for cart_item in cart_items %}
+
+<tr>
+    <td>
+        <figure class="itemside align-items-center">
+             <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
+            <figcaption class="info">
+                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                <p class="text-muted small">
+                    {% if cart_item.variations.all %}
+                        {% for item in cart_item.variations.all %}
+                            {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst  }} <br>
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            </figcaption>
+        </figure>
+    </td>
+    <td> 
+        <!-- col.// -->
+                    <div class="col"> 
+                        <div class="input-group input-spinner">
+                            <div class="input-group-prepend">
+                            <button class="btn btn-light" type="button" id="button-plus"><a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"  class="fa fa-minus"></i></a> </button>
+                            </div>
+                            <input type="text" class="form-control"  value="{{ cart_item.quantity }}">
+                            <div class="input-group-append">
+                            <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
+                                {% csrf_token %}
+                                {% for item in cart_item.variations.all %}
+                                <input type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst }}">
+                                    
+                                {% endfor %}
+                                <button class="btn btn-light" type="submit" id="button-minus"> <i class="fa fa-plus"></i> </button>
+                            </form>
+
+
+                            </div>
+                        </div> <!-- input-group.// -->
+                    </div> <!-- col.// -->
+    </td>
+    <td> 
+        <div class="price-wrap"> 
+            <var class="price">$ {{ cart_item.sub_total }}</var> 
+            <small class="text-muted"> $ {{ cart_item.product.price }} </small> 
+        </div> <!-- price-wrap .// -->
+    </td>
+    <td class="text-right"> 
+        <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" onclick="return confirm('Are you sure for Delete this Item ')" class="btn btn-danger"> Remove</a>
+    </td>
+</tr>
+
+
+{% endfor %}
+    
+</tbody>
+</table>
+</div> <!-- card.// -->
+
+    </aside> <!-- col.// -->
+    <aside class="col-lg-3">
+
         <div class="card">
-            <div class="row no-gutters">
-                <aside class="col-md-6">
-                    <article class="gallery-wrap"> 
-                        <div class="img-big-wrap">
-                            <img src="{{ single_product.image.url }}" class="img-xs icon rounded-circle">
-                        </div>
-                    </article>
-                </aside>
-                <main class="col-md-6 border-left">
-                    <form action="{% url 'place_order' %}" method="POST">
-                        {% csrf_token %}
-                        <article class="content-body">
-                            <h2 class="title">{{ single_product.product_name }}</h2>
-                            <div class="mb-3"> 
-                                <var class="price h4">AED {{single_product.price}}</var> 
-                            </div> 
-                            <!-- Customer Information -->
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control" required>
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" required>
-                                </div>
-                            </div>
+        <div class="card-body">
+            <dl class="dlist-align">
+              <dt>Total price:</dt>
+              <dd class="text-right">${{total}}</dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Tax:</dt>
+              <dd class="text-right"> ${{tax}}</dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Grand Total:</dt>
+              <dd class="text-right text-dark b"><strong>${{ grand_total }}</dd>
+            </dl>
+            <hr>
+            <p class="text-center mb-3">
+                <img src="{% static './images/misc/payments.png'  %}" height="26">
+            </p>
+            <a href="{% url 'checkout_view' %}" class="btn btn-primary btn-block">Checkout</a>
 
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">+971</span>
-                                        </div>
-                                        <input type="text" name="phone" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="city">Emirates</label>
-                                    <select name="city" class="form-control" required>
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="Abu Dhabi">Abu Dhabi - Free Delivery</option>
-                                        <option value="Dubai">Dubai - Free Delivery</option>
-                                        <option value="Sharjah">Sharjah - Free Delivery</option>
-                                        <option value="Ajman">Ajman - Free Delivery</option>
-                                        <option value="Umm Al-Quwain">Umm Al-Quwain - Free Delivery</option>
-                                        <option value="Ras Al Khaimah">Ras Al Khaimah - Free Delivery</option>
-                                        <option value="Fujairah">Fujairah - Free Delivery</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="quantity">Quantity</label>
-                                    <select name="quantity" class="form-control" required="">
-                <option value="" disabled selected >Select</option>
-                 {% for i in single_product.variation_set.quantity %}
-                <option value="{{ i.variation_quantity | lower }}">{{ i.variation_quantity | capfirst }}</option>
-                {% endfor %}
-            </select>
-                                </div>
-                            </div>
+            <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+        </div> <!-- card-body.// -->
+        </div> <!-- card.// -->
 
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="address_line_1">Full Address</label>
-                                    <input type="text" name="address_line_1" class="form-control" required>
-                                </div>
-                            </div>
-                            <br>
-                            <hr>
-                            {% if single_product.stock <= 0 %}
-                                <button type="button" class="btn btn-danger">Out of Stock</button>
-                            {% else %}
-                                <button type="submit" class="btn btn-primary btn-block">Submit now</button>
-                            {% endif %}
-                        </article>
-                    </form>
-                </main>
-            </div>
-        </div>
-        <!-- Customer Reviews -->
-        <div class="row">
-            <div class="col-md-9">
-                <header class="section-heading">
-                    <h3>Customer Reviews</h3>
-                </header>
-                <article class="box mb-3">
-                    <div class="icontext w-100">
-                        <img src="/path/to/static/images/avatars/avatar1.jpg" class="img-xs icon rounded-circle">
-                        <div class="text">
-                            <span class="date text-muted float-md-right">24.04.2020</span>
-                            <h6 class="mb-1">Mike John</h6>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <p>
-                            Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </div>
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+{% endif %}
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
 </section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
 {% endblock %}

@@ -26,5 +26,9 @@ urlpatterns = [
     path('cart/', include('carts.urls')),
     path('accounts/', include('accounts.urls')),
     path('orders/', include('orders.urls')),
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('about/', views.about, name='about_us'),  # Define 'about_us' URL pattern
+    path('whyus/', views.whyus, name='why_us'),  # Define 'why_us' URL pattern
+    path('privacy/', views.privacy_policy, name='privacy_policy'),  # URL pattern for privacy policy page
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,11 +6,11 @@
                 <aside class="col-md-4 col-12">
                     <article class="mr-md-4">
                         <h5 class="title">Contact us</h5>
-                        <p>Virtual Deals FZC LLC, UAE</p>
+                        <p>The Meydan Hotel, Business center 1 M Floor, Nad Al Sheba Dubai, United Arab Emirates</p>
                   <ul class="list-icon">
-    <li><i class="icon fas fa-globe"></i> Jetstorz.com</li>
-    <li><i class="icon fas fa-envelope"></i> sales@Jetstorz.com</li>
-    <li><i class="icon fas fa-phone"></i> +971544370597</li>
+    <li><i class="icon fas fa-globe"></i> alldeals.ae</li>
+    <li><i class="icon fas fa-envelope"></i>info@alldeals.ae</li>
+    <li><i class="icon fas fa-phone"></i>+971 55 361 1609</li>
 </ul>
                     </article>
                 </aside>
@@ -19,9 +19,9 @@
                 <aside class="col-md col-6">
                     <h5 class="title">Information</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Un-Claimable Products</a></li>
-                        <li><a href="#">Why Us?</a></li>
+                        <li><a href="{% url 'about_us' %}">About us</a></li>
+                        <li><a href="{% url 'why_us' %}">Why Us?</a></li>
+                        <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
                     </ul>
                 </aside>
 
@@ -34,23 +34,20 @@
     </form>
     <p class="text-white-50 mb-2">Follow us on social media</p>
     <div>
-        <a href="#" class="btn btn-icon btn-outline-light"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="btn btn-icon btn-outline-light"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="btn btn-icon btn-outline-light"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="btn btn-icon btn-outline-light"><i class="fab fa-youtube"></i></a>
+        <a href="https://web.facebook.com/alldealsonlinestore" class="btn btn-icon btn-outline-light"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/alldealsdubai/" class="btn btn-icon btn-outline-light"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@AllDealsOnlineStore" class="btn btn-icon btn-outline-light"><i class="fab fa-youtube"></i></a>
         <!-- Add TikTok Icon -->
-        <a href="#" class="btn btn-icon btn-outline-light"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.tiktok.com/@alldealsdxb" class="btn btn-icon btn-outline-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tiktok" viewBox="0 0 16 16">
+  <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+</svg></a>
     </div>
 </aside>
 
             </div> <!-- row.// -->
+            <p class="list-unstyled">© 2024 Alldeals.ae, All rights reserved</p>
         </section>
 
-        <!-- Footer Bottom -->
-        <section class="footer-bottom text-center">
-            <p class="text-white">Privacy Policy - </p>
-            <p class="text-muted">© 2024 jetstorz, All rights reserved</p>
-            <br>
-        </section>
+       
     </div>
 </footer>

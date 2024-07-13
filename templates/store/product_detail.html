@@ -28,48 +28,49 @@
                     <form action="{% url 'place_order' %}" method="POST">
                         {% csrf_token %}        
                         <article class="content-body">
-                            <h2 class="title">{{ single_product.product_name }}</h2>
+                            <h2 class="title" style="font-size: 1.5rem;">{{ single_product.product_name }}</h2>
                             <div class="mb-3"> 
-                                <var class="price h4">{{ single_product.price }} AED</var> 
+                                <var class="price h2" style="color: red; font-weight: bold;">{{ single_product.price }} AED</var> 
                             </div> 
                             <!-- Customer Information -->
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="first_name">Full Name</label>
-                                    <input type="text" name="first_name" class="form-control" required required placeholder="  Sid ali">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                        </div>
-                                        <input type="text" name="phone" class="form-control" required placeholder="  +971 XXX XXXXXXX">
-                                    </div>
-                                </div>
+                            
+                            <div class="form-group">
+                                <label for="first_name">Full Name</label>
+                                <input type="text" name="first_name" class="form-control" required placeholder="Jhon deep..">
                             </div>
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label for="city">Emirates</label>
-                                    <select name="city" class="form-control" required>
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="Abu Dhabi">Abu Dhabi - Free Delivery</option>
-                                        <!-- Add other options here -->
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="text" name="phone" class="form-control" required placeholder="+971...">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Emirates</label>
+                                <select name="city" class="form-control" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Abu Dhabi">Abu Dhabi - Free Delivery</option>
+                                    <option value="Dubai">Dubai - Free Delivery</option>
+                                    <option value="Dubai">SHARJAH - Free delivery</option>
+                                    <option value="Dubai">AJMAN - Free delivery</option>
+                                    <option value="Dubai">Ras Al Khaimah - Free delivery</option>
+                                    <option value="Dubai">Umm Al Quwain - Free delivery</option>
+                                    <option value="Dubai">AL AIN - Free delivery</option>
+                                    <!-- Add other options here -->
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label>
                                 <select name="quantity" class="form-control" required>
                                     <option value="" disabled selected>Select</option>
-                                    {% for variation in single_product.variation_set.quantity %}
-                                        <option value="{{ variation.variation_value | lower }}">{{ variation.variation_value | capfirst }}</option>
+                                    {% for variation in single_product.variation_set.all %}
+                                        <option value="{{ variation.variation_value }}">{{ variation.variation_value }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="address_line_1">Delivery Address*</label>
-                                <input type="text" name="address_line_1" class="form-control" required required placeholder="  Area: Al barsha, Street.No: 6, Building name: Al zarooni, Appartment number: 316">
+                                <label for="address_line_1">Full Address</label>
+                                <input type="text" name="address_line_1" class="form-control" required placeholder="Tye here....">
                             </div>
+                            <input type="hidden" name="product_title" value="{{ single_product.product_name }}">
+                            <input type="hidden" name="product_price" value="{{ single_product.price }}">
                             <hr>
                             {% if single_product.stock <= 0 %}
                                 <button type="button" class="btn btn-danger">Out of Stock</button>
@@ -85,28 +86,7 @@
 </section>
 
 <section class="section-name padding-y-sm">
-    <div class="container">
-        <header class="section-heading">
-            <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-            <h3 class="section-title">Popular products</h3>
-        </header><!-- sect-heading -->
-        <div class="row">
-            <!-- Displaying popular products -->
-            {% for product in popular_products %}
-                <div class="col-md-3">
-                    <div class="card card-product-grid">
-                        <a href="{{ product.get_url }}" class="img-wrap">
-                            <img src="{{ product.image.url }}" alt="Product Image">
-                        </a>
-                        <figcaption class="info-wrap">
-                            <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-                            <div class="price mt-1">{{ product.price }}</div>
-                        </figcaption>
-                    </div>
-                </div>
-            {% endfor %}
-        </div> <!-- row.// -->
-    </div><!-- container // -->
+   
 </section>
 <!-- ========================= SECTION END// ========================= -->
 
@@ -115,31 +95,6 @@
     function updateMainImage(imageUrl) {
         document.getElementById('mainImage').src = imageUrl;
     }
-
-    // Function to navigate through gallery images using arrow keys
-    document.addEventListener('keydown', function(event) {
-        const galleryThumbnails = document.querySelectorAll('.gallery-thumb img');
-        const currentMainImage = document.getElementById('mainImage').src;
-        let currentIndex = -1;
-
-        // Find the index of the current main image in the gallery thumbnails
-        galleryThumbnails.forEach((thumbnail, index) => {
-            if (thumbnail.src === currentMainImage) {
-                currentIndex = index;
-            }
-        });
-
-        // Handle arrow key events
-        if (event.key === 'ArrowLeft') {
-            if (currentIndex > 0) {
-                updateMainImage(galleryThumbnails[currentIndex - 1].src);
-            }
-        } else if (event.key === 'ArrowRight') {
-            if (currentIndex < galleryThumbnails.length - 1) {
-                updateMainImage(galleryThumbnails[currentIndex + 1].src);
-            }
-        }
-    });
 </script>
 
 {% endblock %}
