@@ -9,7 +9,21 @@
 # alldeals
 # alldeals
 # alldeals
+<<<<<<< HEAD
 # alldeals
 # alldeals
 # alldeals
 # alldeals
+=======
+# demo
+# sds
+# demo
+# alldealsecom
+# alldeals
+# myproject
+# myproject
+# myproject
+# demo
+# demo
+>>>>>>> 26729369af0455adf9a3cfa33b84c4e571e25574
+# jetstorz
