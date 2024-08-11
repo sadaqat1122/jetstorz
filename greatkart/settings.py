@@ -3,6 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib.messages import constants as messages
 
+
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -31,7 +32,10 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
-    'jet',
+   #'jet',
+   # #'grappelli',
+    #'suit',
+   # 'admin_plus',
     # Add more apps as needed
 ]
 
@@ -53,7 +57,7 @@ ROOT_URLCONF = 'greatkart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,17 +75,17 @@ TEMPLATES = [
 # WSGI application for serving your project
 WSGI_APPLICATION = 'greatkart.wsgi.application'
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # Custom user model for authentication
 AUTH_USER_MODEL = 'accounts.Account'
 
-# Database configuration (using SQLite by default)
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': str(BASE_DIR / 'db.sqlite3'),  # Ensure this is a string
     }
 }
 
@@ -110,12 +114,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, etc.) settings
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collecting static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Additional directories for static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # For collecting static files
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Additional directories for static files
 
 # Media files (user-uploaded content) settings
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Message tags configuration for styling (using Bootstrap classes)
 MESSAGE_TAGS = {

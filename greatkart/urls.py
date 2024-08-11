@@ -1,34 +1,19 @@
-"""greatkart URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path  # Import re_path
 from . import views
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #re_path(r'^jet/', include('jet.urls', namespace='jet')),  # Correct usage of re_path and namespace
     path('', views.home, name='home'),
     path('store/', include('store.urls')),
     path('cart/', include('carts.urls')),
     path('accounts/', include('accounts.urls')),
     path('orders/', include('orders.urls')),
-    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    path('about/', views.about, name='about_us'),  # Define 'about_us' URL pattern
-    path('whyus/', views.whyus, name='why_us'),  # Define 'why_us' URL pattern
-    path('privacy/', views.privacy_policy, name='privacy_policy'),  # URL pattern for privacy policy page
-
+    path('about/', views.about, name='about_us'),
+    path('whyus/', views.whyus, name='why_us'),
+    path('privacy/', views.privacy_policy, name='privacy_policy'),
+   # path('grappelli/', include('grappelli.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
